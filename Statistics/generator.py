@@ -36,6 +36,7 @@ rating = 1
 player_name = player_data['Name']
 
 position = player_data['Position']
+origPosition = ""
 
 matchesPlayed = player_data['Matches Played']
 
@@ -47,6 +48,18 @@ goalsConceded = player_data['goalsConceded']
 
 passes = player_data['Passes']
 interceptions = player_data['Interceptions']
+tackles = player_data['Tackles']
+
+for position in position:
+    if position == "RB":
+        origPosition = "RB"
+        position = "FB"
+    elif position == "LB":
+        origPosition = "LB"
+        position = "FB"
+    else:
+        position = position
+    
 
 ### CARD STATS
 
@@ -62,6 +75,36 @@ if position == "GK":
     rating = 85
 
     ### calculate rating modifier ###
+
+
+
+elif position == "FB":
+    statsRequired = [interceptions, goalsConceded]
+    draw.text((350, 390), player_name, font=font1, fill="white")
+    draw.text((350, 480), f"Interceptions (AVG): {interceptions/matchesPlayed}", font=font2, fill="white")
+    draw.text((220, 510),
+              f"Goals Conceded (Avg): {goalsConceded/matchesPlayed}",
+              font=font2,
+              fill="white")
+    if origPosition == "LB":
+        draw.text((390, 750), "LB", font=font1, fill="white")
+    elif origPosition == "RB":
+        draw.text((390, 750), "RB", font=font1, fill="white")
+        rating = 85
+
+
+elif position == "CB":
+    statsRequired = [interceptions, tackles]
+    draw.text((350, 390), player_name, font=font1, fill="white")
+    draw.text((350, 480), f"Interceptions (AVG): {interceptions/matchesPlayed}", font=font2, fill="white")
+    draw.text((220, 510),
+              f"Tackles (Avg): {tackles/matchesPlayed}",
+              font=font2,
+              fill="white")
+    draw.text((390, 750), "CB", font=font1, fill="white")
+    rating = 85
+
+
 
 ### SAVE CARD
 
